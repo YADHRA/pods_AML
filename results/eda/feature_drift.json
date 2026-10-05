@@ -1,0 +1,178 @@
+[
+  {
+    "feature": "a_dst_days_active_frac",
+    "ks": 0.17923999999999998,
+    "nan_share_train": 0.0,
+    "nan_share_val": 0.0,
+    "mean_train": 0.8793775020215661,
+    "mean_val": 0.8704451250432431
+  },
+  {
+    "feature": "a_src_mean_z_out",
+    "ks": 0.10874000000000006,
+    "nan_share_train": 0.07161527647610122,
+    "nan_share_val": 0.013749010899780844,
+    "mean_train": 0.030586524432748733,
+    "mean_val": 0.01801522243712223
+  },
+  {
+    "feature": "a_src_days_active_frac",
+    "ks": 0.106505,
+    "nan_share_train": 0.0,
+    "nan_share_val": 0.0,
+    "mean_train": 0.9136332509296388,
+    "mean_val": 0.9325850028501451
+  },
+  {
+    "feature": "a_dst_fmt_diversity",
+    "ks": 0.09147,
+    "nan_share_train": 0.0,
+    "nan_share_val": 0.0,
+    "mean_train": 3.117955,
+    "mean_val": 3.392305
+  },
+  {
+    "feature": "a_src_n_out_rate",
+    "ks": 0.09012,
+    "nan_share_train": 0.0,
+    "nan_share_val": 0.0,
+    "mean_train": 2.296250213475004,
+    "mean_val": 2.3696705969025196
+  },
+  {
+    "feature": "a_src_n_in_rate",
+    "ks": 0.08841500000000002,
+    "nan_share_train": 0.0,
+    "nan_share_val": 0.0,
+    "mean_train": 1.1474688856955617,
+    "mean_val": 1.1562702279433608
+  },
+  {
+    "feature": "a_dst_n_in_rate",
+    "ks": 0.08676499999999998,
+    "nan_share_train": 0.0,
+    "nan_share_val": 0.0,
+    "mean_train": 1.2385105228829383,
+    "mean_val": 1.249992790767327
+  },
+  {
+    "feature": "a_dst_days_since_last",
+    "ks": 0.08313499999999996,
+    "nan_share_train": 0.040312558575445176,
+    "nan_share_val": 0.0073431628835741005,
+    "mean_train": 1.18423,
+    "mean_val": 1.04927
+  },
+  {
+    "feature": "a_src_fmt_diversity",
+    "ks": 0.07130500000000001,
+    "nan_share_train": 0.0,
+    "nan_share_val": 0.0,
+    "mean_train": 3.352935,
+    "mean_val": 3.623965
+  },
+  {
+    "feature": "a_dst_n_out_rate",
+    "ks": 0.054595000000000005,
+    "nan_share_train": 0.0,
+    "nan_share_val": 0.0,
+    "mean_train": 0.6980816177526862,
+    "mean_val": 0.6581137549330294
+  },
+  {
+    "feature": "a_src_days_since_last",
+    "ks": 0.03610499999999994,
+    "nan_share_train": 0.04676476101218369,
+    "nan_share_val": 0.006430704985065105,
+    "mean_train": 1.09032,
+    "mean_val": 1.040595
+  },
+  {
+    "feature": "a_src_mean_z_in",
+    "ks": 0.03508,
+    "nan_share_train": 0.15328678537956889,
+    "nan_share_val": 0.08939912420613055,
+    "mean_train": 0.08746757200303965,
+    "mean_val": 0.1577005270931628
+  },
+  {
+    "feature": "a_src_max_z_out",
+    "ks": 0.03178500000000001,
+    "nan_share_train": 0.07161527647610122,
+    "nan_share_val": 0.013749010899780844,
+    "mean_train": 1.5329529439432124,
+    "mean_val": 1.6345823248656128
+  },
+  {
+    "feature": "a_dst_max_z_out",
+    "ks": 0.027700000000000002,
+    "nan_share_train": 0.46747235238987817,
+    "nan_share_val": 0.4139099597731387,
+    "mean_train": 1.012497641821839,
+    "mean_val": 1.059946773498357
+  },
+  {
+    "feature": "a_dst_mean_z_in",
+    "ks": 0.018325000000000036,
+    "nan_share_train": 0.05905388940955951,
+    "nan_share_val": 0.01650606302898737,
+    "mean_train": 0.019578389515491346,
+    "mean_val": 0.01446692828388628
+  },
+  {
+    "feature": "t_amount_z_in_currency",
+    "ks": 0.016855000000000064,
+    "nan_share_train": 0.0,
+    "nan_share_val": 0.0,
+    "mean_train": 0.0008030235541508955,
+    "mean_val": -0.0319080585946141
+  },
+  {
+    "feature": "t_log_amount_paid",
+    "ks": 0.015145000000000075,
+    "nan_share_train": 0.0,
+    "nan_share_val": 0.0,
+    "mean_train": 3.1722661780546924,
+    "mean_val": 3.1302525797674026
+  },
+  {
+    "feature": "a_dst_mean_z_out",
+    "ks": 0.013580000000000036,
+    "nan_share_train": 0.46747235238987817,
+    "nan_share_val": 0.4139099597731387,
+    "mean_train": 0.2587718047211162,
+    "mean_val": 0.2455569044751416
+  },
+  {
+    "feature": "t_hour",
+    "ks": 0.004519999999999996,
+    "nan_share_train": 0.0,
+    "nan_share_val": 0.0,
+    "mean_train": 11.09704,
+    "mean_val": 11.141125
+  },
+  {
+    "feature": "t_same_bank",
+    "ks": 0.001434999999999964,
+    "nan_share_train": 0.0,
+    "nan_share_val": 0.0,
+    "mean_train": 0.043385,
+    "mean_val": 0.04482
+  },
+  {
+    "feature": "t_is_self_loop",
+    "ks": 0.0008500000000000174,
+    "nan_share_train": 0.0,
+    "nan_share_val": 0.0,
+    "mean_train": 0.02138,
+    "mean_val": 0.02223
+  },
+  {
+    "feature": "t_is_fx",
+    "ks": 0.000200000000000089,
+    "nan_share_train": 0.0,
+    "nan_share_val": 0.0,
+    "mean_train": 0.01572,
+    "mean_val": 0.01592
+  }
+]
