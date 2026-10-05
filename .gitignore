@@ -1,37 +1,20 @@
-# Python
-__pycache__/
-*.py[cod]
-*.pyo
-
-# Virtual environments
-.venv/
-venv/
-env/
-
-# IDE
-.vscode/
-.idea/
-
-# Environment variables
-.env
-.env.*
-
-# Large/local data
+# data & models (never commit the raw CSV or big outputs)
 data/*
 !data/.gitkeep
-
-# Models
 models/*
 !models/.gitkeep
-
-# Generated results
-results/*
-!results/.gitkeep
-
-# Temporary files
-*.tmp
-*.log
-
-# OS
+*.csv
+*.pkl
+*.joblib
+# python
+__pycache__/
+*.egg-info/
+.venv/
+.pytest_cache/
+# node
+node_modules/
+frontend/dist/
+# notebooks / os
+.ipynb_checkpoints/
 .DS_Store
-Thumbs.db
+.env

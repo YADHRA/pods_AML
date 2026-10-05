@@ -1,0 +1,55 @@
+# SINGLE SOURCE OF TRUTH for model columns (post-assembly names). Change via contract/* PR only.
+m1_transaction:
+  - t_log_amount_paid
+  - t_amount_z_in_currency
+  - t_payment_format
+  - t_cur_paid
+  - t_is_fx
+  - t_is_self_loop
+  - t_same_bank
+  - t_hour
+
+group_account:        # group "A"
+  - a_src_n_out_rate
+  - a_src_n_in_rate
+  - a_src_mean_z_out
+  - a_src_mean_z_in
+  - a_src_max_z_out
+  - a_src_days_active_frac
+  - a_src_days_since_last
+  - a_src_fmt_diversity
+  - a_dst_n_out_rate
+  - a_dst_n_in_rate
+  - a_dst_mean_z_out
+  - a_dst_mean_z_in
+  - a_dst_max_z_out
+  - a_dst_days_active_frac
+  - a_dst_days_since_last
+  - a_dst_fmt_diversity
+
+group_pair:           # group "P"
+  - g_pair_seen_before
+  - g_pair_prior_count_log
+  - g_reverse_pair_seen
+
+group_network:        # group "C"
+  - g_src_pagerank_log
+  - g_dst_pagerank_log
+  - g_src_wcc_size_log
+  - g_dst_wcc_size_log
+  - g_src_n_unique_out_log
+  - g_dst_n_unique_in_log
+  - g_dst_has_sent_before
+  - g_src_has_received_before
+
+# Model 2 = m1_transaction + group_account + group_pair + group_network
+categorical: [t_payment_format, t_cur_paid]
+
+# Dropped in the "no-shortcut" variant (fmt_diversity is a proxy for the format artifact)
+shortcut_features:
+  - t_payment_format
+  - t_cur_paid
+  - t_is_fx
+  - t_is_self_loop
+  - a_src_fmt_diversity
+  - a_dst_fmt_diversity

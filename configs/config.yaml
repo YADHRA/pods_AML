@@ -1,0 +1,37 @@
+seed: 42
+final_seeds: [42, 43, 44]
+
+dataset:
+  filename: HI-Small_Trans.csv
+  expected_rows: 5078345
+  expected_positives: 5177
+  expected_exact_duplicates: 9
+  sha256: b19d39f515523373f991b689c07e11e7b0b95c17a2c27a87d91584ae16c5b040
+
+split:                    # inclusive date ranges, LOCKED
+  warmup: ["2022-09-01", "2022-09-01"]
+  train:  ["2022-09-02", "2022-09-06"]
+  val:    ["2022-09-07", "2022-09-08"]
+  test:   ["2022-09-09", "2022-09-10"]
+  tail:   ["2022-09-11", "2022-09-18"]
+
+history_rule: "features for day D use only dates < D"
+
+xgboost:
+  tree_method: hist
+  objective: binary:logistic
+  eval_metric: aucpr
+  n_estimators_max: 2000
+  early_stopping_rounds: 50
+  tuning:
+    n_random_configs: 12
+    max_depth: [4, 7]
+    learning_rate: [0.05, 0.1]
+    min_child_weight: [1, 10]
+    scale_pos_weight_options: ["one", "sqrt_ratio", "full_ratio"]   # computed from TRAIN only
+
+evaluation:
+  primary_metric: pr_auc
+  threshold_rule: max_f1_on_val     # OPEN: confirm with team; frozen into results/thresholds.json before test
+  alert_budget_fraction: 0.005
+  bootstrap_resamples: 300

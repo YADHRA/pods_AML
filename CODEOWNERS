@@ -1,0 +1,12 @@
+# Replace with real GitHub usernames
+*                       @P1_USERNAME @P2_USERNAME
+/src/aml/data/          @P1_USERNAME
+/src/aml/features/      @P1_USERNAME
+/src/aml/models/        @P1_USERNAME
+/src/aml/evaluation/    @P1_USERNAME
+/src/aml/graph/         @P2_USERNAME
+/backend/               @P2_USERNAME
+/frontend/              @P2_USERNAME
+/src/aml/common/        @P1_USERNAME @P2_USERNAME
+/configs/               @P1_USERNAME @P2_USERNAME
+/docs/                  @P1_USERNAME @P2_USERNAME
