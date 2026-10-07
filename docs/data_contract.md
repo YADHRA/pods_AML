@@ -1,28 +1,28 @@
-\# Data \& Results Contract
+# Data & Results Contract
 
 
 
-\*\*SHARED — change only via `contract/\*` PR, both approve\*\*
+**SHARED — change only via `contract/*` PR, both approve**
 
 
 
-\## Locked rules
+## Locked rules
 
 
 
-\- Split (inclusive): warmup Sep 1 · train Sep 2–6 · val Sep 7–8 · test Sep 9–10 · tail Sep 11–18 (report separately, never pooled).
+- Split (inclusive): warmup Sep 1 · train Sep 2–6 · val Sep 7–8 · test Sep 9–10 · tail Sep 11–18 (report separately, never pooled).
 
-\- History rule: a day-D row uses only transactions with `date < D` (strictly earlier DAYS, not earlier minutes).
+- History rule: a day-D row uses only transactions with `date < D` (strictly earlier DAYS, not earlier minutes).
 
-\- `txn\_id` = original 0-based CSV data-row index (int32), assigned right after load, never recomputed. Join ONLY on `txn\_id` or `(date, node\_id)`, never by row position.
+- `txn_id` = original 0-based CSV data-row index (int32), assigned right after load, never recomputed. Join ONLY on `txn_id` or `(date, node_id)`, never by row position.
 
-\- Node = (bank, account) as strings (bank codes have leading zeros). Self-loops stay as rows but are excluded from graph topology and account history.
+- Node = (bank, account) as strings (bank codes have leading zeros). Self-loops stay as rows but are excluded from graph topology and account history.
 
-\- Exact duplicates (9) are audited, NOT deleted. Repeated timestamps are normal.
+- Exact duplicates (9) are audited, NOT deleted. Repeated timestamps are normal.
 
 
 
-\## Files
+## Files
 
 
 
@@ -30,17 +30,17 @@
 
 |---|---|---|---|---|
 
-| transactions\_clean.parquet | P1 → P2 | txn\_id | see `schema.py` (superset; P2 needs src\_node, dst\_node, date, split, is\_self\_loop, txn\_id, is\_laundering) · all 5,078,345 rows · sorted (ts, txn\_id) | real |
+| transactions_clean.parquet | P1 → P2 | txn_id | see `schema.py` (superset; P2 needs src_node, dst_node, date, split, is_self_loop, txn_id, is_laundering) · all 5,078,345 rows · sorted (ts, txn_id) | real |
 
-| node\_map.parquet | P1 → P2 | node\_id | node\_id, bank, account | same |
+| node_map.parquet | P1 → P2 | node_id | node_id, bank, account | same |
 
-| graph\_node\_day.parquet | P2 → P1 | (feature\_date, node\_id) | g\_pagerank\_log, g\_wcc\_size\_log, g\_n\_unique\_out\_log, g\_n\_unique\_in\_log, g\_has\_sent\_before, g\_has\_received\_before · from date < feature\_date, non-self edges | real |
+| graph_node_day.parquet | P2 → P1 | (feature_date, node_id) | g_pagerank_log, g_wcc_size_log, g_n_unique_out_log, g_n_unique_in_log, g_has_sent_before, g_has_received_before · from date < feature_date, non-self edges | real |
 
-| graph\_pair\_txn.parquet | P2 → P1 | txn\_id | g\_pair\_seen\_before, g\_pair\_prior\_count\_log, g\_reverse\_pair\_seen | real |
+| graph_pair_txn.parquet | P2 → P1 | txn_id | g_pair_seen_before, g_pair_prior_count_log, g_reverse_pair_seen | real |
 
 
 
-\## Results file shapes
+## Results file shapes
 
 
 
@@ -52,21 +52,21 @@ Six rules to know:
 
 
 
-\- The run-id variant is `noflags`, but `thresholds.json` keys use `noshortcut` (`m2\_noshortcut\_seed42`). The meaning is the same.
+- The run-id variant is `noflags`, but `thresholds.json` keys use `noshortcut` (`m2_noshortcut_seed42`). The meaning is the same.
 
-\- Split names are `val`, `test`, `tail` everywhere, except `metrics/{run\_id}.json`, which uses the full word `validation`.
+- Split names are `val`, `test`, `tail` everywhere, except `metrics/{run_id}.json`, which uses the full word `validation`.
 
-\- Tail is always reported separately, never pooled.
+- Tail is always reported separately, never pooled.
 
-\- Prevalence differs by split and by subset, so PR-AUC is only comparable within the same split and subset.
+- Prevalence differs by split and by subset, so PR-AUC is only comparable within the same split and subset.
 
-\- Only some files exist for all 12 runs.
+- Only some files exist for all 12 runs.
 
-\- `transaction\_inspector.parquet` is a biased sample. Never compute rates from it.
+- `transaction_inspector.parquet` is a biased sample. Never compute rates from it.
 
 
 
-\### thresholds.json
+### thresholds.json
 
 
 
@@ -74,7 +74,7 @@ Object keyed:
 
 
 
-`{m1|m2}\_{full|noshortcut}\_seed{N}`
+`{m1|m2}_{full|noshortcut}_seed{N}`
 
 
 
@@ -86,11 +86,11 @@ Each value contains:
 
 
 
-`rule`, `threshold`, `val\_f1`, `val\_n\_alerts`, `val\_precision`, `val\_recall`.
+`rule`, `threshold`, `val_f1`, `val_n_alerts`, `val_precision`, `val_recall`.
 
 
 
-\### metrics/{run\_id}.json
+### metrics/{run_id}.json
 
 
 
@@ -102,7 +102,7 @@ Top-level fields:
 
 
 
-`run\_id`, `model`, `variant`, `seed`, `n\_features`, `features`, `threshold`, `validation`, `test`, `tail`.
+`run_id`, `model`, `variant`, `seed`, `n_features`, `features`, `threshold`, `validation`, `test`, `tail`.
 
 
 
@@ -114,7 +114,7 @@ Top-level fields:
 
 
 
-`value`, `rule`, `frozen\_on`.
+`value`, `rule`, `frozen_on`.
 
 
 
@@ -122,11 +122,11 @@ Each of `validation`, `test`, and `tail` contains:
 
 
 
-`n`, `n\_pos`, `prevalence`, `pr\_auc`, `lift`, `roc\_auc`, `threshold`, `precision`, `recall`, `f1`, `tn`, `fp`, `fn`, `tp`, `n\_alerts`, `accuracy`, `budget\_frac`, `budget\_k`, `recall\_at\_budget`, `precision\_at\_budget`.
+`n`, `n_pos`, `prevalence`, `pr_auc`, `lift`, `roc_auc`, `threshold`, `precision`, `recall`, `f1`, `tn`, `fp`, `fn`, `tp`, `n_alerts`, `accuracy`, `budget_frac`, `budget_k`, `recall_at_budget`, `precision_at_budget`.
 
 
 
-\### curves/{run\_id}\_{split}.json
+### curves/{run_id}_{split}.json
 
 
 
@@ -138,7 +138,7 @@ Top-level fields:
 
 
 
-`run\_id`, `split`, `n`, `n\_pos`, `prevalence`, `pr`, `roc`, `budget`, `operating\_point`.
+`run_id`, `split`, `n`, `n_pos`, `prevalence`, `pr`, `roc`, `budget`, `operating_point`.
 
 
 
@@ -162,15 +162,15 @@ The curve arrays contain at most 300 points and are rounded to 5 decimals.
 
 
 
-`operating\_point` contains:
+`operating_point` contains:
 
 
 
-`threshold`, `n\_alerts`, `precision`, `recall`.
+`threshold`, `n_alerts`, `precision`, `recall`.
 
 
 
-\### permutation.json
+### permutation.json
 
 
 
@@ -182,7 +182,7 @@ Top-level fields:
 
 
 
-`metric`, `split`, `n\_repeats`, `note`, `runs`.
+`metric`, `split`, `n_repeats`, `note`, `runs`.
 
 
 
@@ -194,7 +194,7 @@ Each run contains:
 
 
 
-`baseline\_pr\_auc\_weighted`, `n\_rows`, `n\_positive`, `n\_negative\_sampled`, `features`.
+`baseline_pr_auc_weighted`, `n_rows`, `n_positive`, `n_negative_sampled`, `features`.
 
 
 
@@ -202,7 +202,7 @@ Each `features` item contains:
 
 
 
-`feature`, `importance\_mean`, `importance\_std`.
+`feature`, `importance_mean`, `importance_std`.
 
 
 
@@ -210,13 +210,13 @@ Runs:
 
 
 
-\- `20261007\_m1\_full\_seed42`
+- `20261007_m1_full_seed42`
 
-\- `20261007\_m1\_noflags\_seed42`
+- `20261007_m1_noflags_seed42`
 
-\- `20261007\_m2\_full\_seed42`
+- `20261007_m2_full_seed42`
 
-\- `20261007\_m2\_noflags\_seed42`
+- `20261007_m2_noflags_seed42`
 
 
 
@@ -224,7 +224,7 @@ Negatives were sampled, so the baseline is weighted and differs from the PR-AUC 
 
 
 
-\### shap/{run\_id}.json
+### shap/{run_id}.json
 
 
 
@@ -236,7 +236,7 @@ Top-level fields:
 
 
 
-`run\_id`, `split`, `space`, `base\_value`, `global`, `sample`.
+`run_id`, `split`, `space`, `base_value`, `global`, `sample`.
 
 
 
@@ -244,7 +244,7 @@ Each `global` item contains:
 
 
 
-`feature`, `mean\_abs\_all`, `mean\_abs\_fraud`.
+`feature`, `mean_abs_all`, `mean_abs_fraud`.
 
 
 
@@ -252,7 +252,7 @@ Each `global` item contains:
 
 
 
-`label`, `features`, `categorical\_features\_as\_codes`, `values`, `shap`.
+`label`, `features`, `categorical_features_as_codes`, `values`, `shap`.
 
 
 
@@ -260,7 +260,7 @@ The sample contains 600 rows.
 
 
 
-`values` and `shap` have shape `600 × n\_features`.
+`values` and `shap` have shape `600 × n_features`.
 
 
 
@@ -268,7 +268,7 @@ Categorical values in `values` are integer category codes.
 
 
 
-\### hard\_subset.json
+### hard_subset.json
 
 
 
@@ -284,7 +284,7 @@ Top-level fields:
 
 
 
-`g\_pair\_seen\_before == 0`.
+`g_pair_seen_before == 0`.
 
 
 
@@ -296,7 +296,7 @@ Each run contains:
 
 
 
-`run\_id`, `model`, `variant`, `seed`, `splits`.
+`run_id`, `model`, `variant`, `seed`, `splits`.
 
 
 
@@ -308,7 +308,7 @@ Each split contains:
 
 
 
-`n`, `n\_pos`, `base\_rate`, `pr\_auc`, `threshold`, `n\_alerts`, `precision`, `recall`, `f1`, `informative`.
+`n`, `n_pos`, `base_rate`, `pr_auc`, `threshold`, `n_alerts`, `precision`, `recall`, `f1`, `informative`.
 
 
 
@@ -324,7 +324,7 @@ The subset base rate is about 1.4%, much higher than the overall test rate of ab
 
 
 
-\### transaction\_inspector.parquet
+### transaction_inspector.parquet
 
 
 
@@ -344,27 +344,27 @@ Columns:
 
 
 
-`txn\_id`, `is\_laundering`, `score\_m1`, `score\_m2`,
+`txn_id`, `is_laundering`, `score_m1`, `score_m2`,
 
-`outcome\_m1`, `outcome\_m2`, `reason`,
+`outcome_m1`, `outcome_m2`, `reason`,
 
-`shap1\_feature`, `shap1\_value`,
+`shap1_feature`, `shap1_value`,
 
-`shap2\_feature`, `shap2\_value`,
+`shap2_feature`, `shap2_value`,
 
-`shap3\_feature`, `shap3\_value`,
+`shap3_feature`, `shap3_value`,
 
-`ts`, `src\_node`, `dst\_node`,
+`ts`, `src_node`, `dst_node`,
 
-`src\_bank`, `dst\_bank`,
+`src_bank`, `dst_bank`,
 
-`amount\_paid`, `cur\_paid`,
+`amount_paid`, `cur_paid`,
 
-`amount\_received`, `cur\_recv`,
+`amount_received`, `cur_recv`,
 
-`payment\_format`, `split`,
+`payment_format`, `split`,
 
-`thr\_m1`, `thr\_m2`.
+`thr_m1`, `thr_m2`.
 
 
 
@@ -372,11 +372,11 @@ The three SHAP feature/value pairs are the top 3 M2 SHAP contributions by absolu
 
 
 
-\### eda/\*.json
+### eda/*.json
 
 
 
-\#### splits.json
+#### splits.json
 
 
 
@@ -388,11 +388,11 @@ Each object:
 
 
 
-`split`, `n\_rows`, `n\_pos`, `date\_min`, `date\_max`, `pos\_rate`.
+`split`, `n_rows`, `n_pos`, `date_min`, `date_max`, `pos_rate`.
 
 
 
-\#### daily.json
+#### daily.json
 
 
 
@@ -404,11 +404,11 @@ Each object:
 
 
 
-`date`, `n\_rows`, `n\_pos`, `pos\_rate`.
+`date`, `n_rows`, `n_pos`, `pos_rate`.
 
 
 
-\#### feature\_drift.json
+#### feature_drift.json
 
 
 
@@ -420,7 +420,7 @@ Each object:
 
 
 
-`feature`, `ks`, `nan\_share\_train`, `nan\_share\_val`, `mean\_train`, `mean\_val`.
+`feature`, `ks`, `nan_share_train`, `nan_share_val`, `mean_train`, `mean_val`.
 
 
 
@@ -428,11 +428,11 @@ This contains numeric/binary features only, comparing train vs validation.
 
 
 
-The two M2 categorical features, `t\_payment\_format` and `t\_cur\_paid`, are intentionally not included.
+The two M2 categorical features, `t_payment_format` and `t_cur_paid`, are intentionally not included.
 
 
 
-\#### data\_quality.json
+#### data_quality.json
 
 
 
@@ -440,27 +440,27 @@ Top-level fields:
 
 
 
-`n\_rows`, `n\_positives`, `positive\_rate`, `nulls`,
+`n_rows`, `n_positives`, `positive_rate`, `nulls`,
 
-`ts\_min`, `ts\_max`, `n\_distinct\_timestamps`,
+`ts_min`, `ts_max`, `n_distinct_timestamps`,
 
-`raw\_is\_chronological`, `rows\_stepping\_backwards\_in\_time`,
+`raw_is_chronological`, `rows_stepping_backwards_in_time`,
 
-`exact\_duplicate\_extra\_rows`,
+`exact_duplicate_extra_rows`,
 
-`exact\_duplicate\_extra\_rows\_laundering`,
+`exact_duplicate_extra_rows_laundering`,
 
-`currencies`, `payment\_formats`,
+`currencies`, `payment_formats`,
 
-`amount\_paid\_min`, `amount\_paid\_max`,
+`amount_paid_min`, `amount_paid_max`,
 
-`amount\_paid\_nonpositive`, `amount\_paid\_le\_0.01`,
+`amount_paid_nonpositive`, `amount_paid_le_0.01`,
 
-`fx\_rows`, `fx\_rows\_positive`,
+`fx_rows`, `fx_rows_positive`,
 
-`non\_fx\_rows\_with\_unequal\_amounts`,
+`non_fx_rows_with_unequal_amounts`,
 
-`bank\_codes\_have\_leading\_zeros`.
+`bank_codes_have_leading_zeros`.
 
 
 
@@ -468,5 +468,5 @@ Top-level fields:
 
 
 
-`currencies` and `payment\_formats` are lists of strings.
+`currencies` and `payment_formats` are lists of strings.
 
