@@ -1,0 +1,420 @@
+{
+  "metric": "pr_auc_drop",
+  "split": "val",
+  "n_repeats": 3,
+  "note": "importance = baseline PR-AUC minus PR-AUC with one feature shuffled; higher = model relies on it more",
+  "runs": {
+    "20261007_m1_full_seed42": {
+      "baseline_pr_auc_weighted": 0.08877,
+      "n_rows": 121036,
+      "n_positive": 1036,
+      "n_negative_sampled": 120000,
+      "features": [
+        {
+          "feature": "t_payment_format",
+          "importance_mean": 0.08571,
+          "importance_std": 0.0003
+        },
+        {
+          "feature": "t_amount_z_in_currency",
+          "importance_mean": 0.07968,
+          "importance_std": 0.00138
+        },
+        {
+          "feature": "t_cur_paid",
+          "importance_mean": 0.03237,
+          "importance_std": 0.00086
+        },
+        {
+          "feature": "t_hour",
+          "importance_mean": 0.02583,
+          "importance_std": 0.00185
+        },
+        {
+          "feature": "t_log_amount_paid",
+          "importance_mean": 0.00187,
+          "importance_std": 0.00313
+        },
+        {
+          "feature": "t_is_self_loop",
+          "importance_mean": 0.00142,
+          "importance_std": 0.00083
+        },
+        {
+          "feature": "t_same_bank",
+          "importance_mean": 0.00094,
+          "importance_std": 0.00045
+        },
+        {
+          "feature": "t_is_fx",
+          "importance_mean": 0.00079,
+          "importance_std": 0.00142
+        }
+      ]
+    },
+    "20261007_m1_noflags_seed42": {
+      "baseline_pr_auc_weighted": 0.00769,
+      "n_rows": 121036,
+      "n_positive": 1036,
+      "n_negative_sampled": 120000,
+      "features": [
+        {
+          "feature": "t_amount_z_in_currency",
+          "importance_mean": 0.00624,
+          "importance_std": 7e-05
+        },
+        {
+          "feature": "t_hour",
+          "importance_mean": 0.00262,
+          "importance_std": 0.00053
+        },
+        {
+          "feature": "t_log_amount_paid",
+          "importance_mean": 0.00249,
+          "importance_std": 0.00012
+        },
+        {
+          "feature": "t_same_bank",
+          "importance_mean": 0.0003,
+          "importance_std": 0.00023
+        }
+      ]
+    },
+    "20261007_m2_full_seed42": {
+      "baseline_pr_auc_weighted": 0.57385,
+      "n_rows": 121036,
+      "n_positive": 1036,
+      "n_negative_sampled": 120000,
+      "features": [
+        {
+          "feature": "g_pair_seen_before",
+          "importance_mean": 0.37915,
+          "importance_std": 0.00118
+        },
+        {
+          "feature": "t_payment_format",
+          "importance_mean": 0.36651,
+          "importance_std": 0.02381
+        },
+        {
+          "feature": "t_amount_z_in_currency",
+          "importance_mean": 0.31691,
+          "importance_std": 0.00467
+        },
+        {
+          "feature": "g_pair_prior_count_log",
+          "importance_mean": 0.26708,
+          "importance_std": 0.00961
+        },
+        {
+          "feature": "t_is_self_loop",
+          "importance_mean": 0.12357,
+          "importance_std": 0.00064
+        },
+        {
+          "feature": "g_src_n_unique_out_log",
+          "importance_mean": 0.11379,
+          "importance_std": 0.00503
+        },
+        {
+          "feature": "g_dst_n_unique_in_log",
+          "importance_mean": 0.0505,
+          "importance_std": 0.00257
+        },
+        {
+          "feature": "a_src_n_in_rate",
+          "importance_mean": 0.04344,
+          "importance_std": 0.00148
+        },
+        {
+          "feature": "g_src_wcc_size_log",
+          "importance_mean": 0.03408,
+          "importance_std": 0.00088
+        },
+        {
+          "feature": "g_reverse_pair_seen",
+          "importance_mean": 0.02636,
+          "importance_std": 0.00019
+        },
+        {
+          "feature": "a_dst_n_out_rate",
+          "importance_mean": 0.02029,
+          "importance_std": 0.0042
+        },
+        {
+          "feature": "g_src_pagerank_log",
+          "importance_mean": 0.02002,
+          "importance_std": 0.00242
+        },
+        {
+          "feature": "g_dst_pagerank_log",
+          "importance_mean": 0.01742,
+          "importance_std": 0.00189
+        },
+        {
+          "feature": "t_log_amount_paid",
+          "importance_mean": 0.01465,
+          "importance_std": 0.00146
+        },
+        {
+          "feature": "t_cur_paid",
+          "importance_mean": 0.01251,
+          "importance_std": 0.00053
+        },
+        {
+          "feature": "a_dst_max_z_out",
+          "importance_mean": 0.01205,
+          "importance_std": 0.00201
+        },
+        {
+          "feature": "a_src_n_out_rate",
+          "importance_mean": 0.01185,
+          "importance_std": 0.00127
+        },
+        {
+          "feature": "a_src_mean_z_in",
+          "importance_mean": 0.01002,
+          "importance_std": 0.00102
+        },
+        {
+          "feature": "a_dst_mean_z_in",
+          "importance_mean": 0.00985,
+          "importance_std": 0.00058
+        },
+        {
+          "feature": "a_src_mean_z_out",
+          "importance_mean": 0.00983,
+          "importance_std": 0.00116
+        },
+        {
+          "feature": "a_src_max_z_out",
+          "importance_mean": 0.00962,
+          "importance_std": 0.0019
+        },
+        {
+          "feature": "t_hour",
+          "importance_mean": 0.00702,
+          "importance_std": 0.00204
+        },
+        {
+          "feature": "t_is_fx",
+          "importance_mean": 0.00541,
+          "importance_std": 0.0001
+        },
+        {
+          "feature": "a_dst_mean_z_out",
+          "importance_mean": 0.00491,
+          "importance_std": 0.00055
+        },
+        {
+          "feature": "a_src_days_since_last",
+          "importance_mean": 0.00465,
+          "importance_std": 0.00012
+        },
+        {
+          "feature": "a_dst_n_in_rate",
+          "importance_mean": 0.00435,
+          "importance_std": 0.00165
+        },
+        {
+          "feature": "a_src_fmt_diversity",
+          "importance_mean": 0.00427,
+          "importance_std": 0.00157
+        },
+        {
+          "feature": "a_dst_fmt_diversity",
+          "importance_mean": 0.00265,
+          "importance_std": 0.00017
+        },
+        {
+          "feature": "a_dst_days_since_last",
+          "importance_mean": 0.00213,
+          "importance_std": 0.00016
+        },
+        {
+          "feature": "g_dst_wcc_size_log",
+          "importance_mean": 0.00059,
+          "importance_std": 0.0001
+        },
+        {
+          "feature": "g_src_has_received_before",
+          "importance_mean": 0.0,
+          "importance_std": 0.0
+        },
+        {
+          "feature": "g_dst_has_sent_before",
+          "importance_mean": -0.00017,
+          "importance_std": 0.0001
+        },
+        {
+          "feature": "t_same_bank",
+          "importance_mean": -0.00086,
+          "importance_std": 0.00117
+        },
+        {
+          "feature": "a_dst_days_active_frac",
+          "importance_mean": -0.00121,
+          "importance_std": 0.00034
+        },
+        {
+          "feature": "a_src_days_active_frac",
+          "importance_mean": -0.00299,
+          "importance_std": 0.00063
+        }
+      ]
+    },
+    "20261007_m2_noflags_seed42": {
+      "baseline_pr_auc_weighted": 0.53661,
+      "n_rows": 121036,
+      "n_positive": 1036,
+      "n_negative_sampled": 120000,
+      "features": [
+        {
+          "feature": "g_pair_prior_count_log",
+          "importance_mean": 0.44928,
+          "importance_std": 0.00868
+        },
+        {
+          "feature": "t_same_bank",
+          "importance_mean": 0.36353,
+          "importance_std": 0.00098
+        },
+        {
+          "feature": "t_amount_z_in_currency",
+          "importance_mean": 0.3213,
+          "importance_std": 0.00468
+        },
+        {
+          "feature": "g_pair_seen_before",
+          "importance_mean": 0.31524,
+          "importance_std": 0.01133
+        },
+        {
+          "feature": "g_src_n_unique_out_log",
+          "importance_mean": 0.13405,
+          "importance_std": 0.00234
+        },
+        {
+          "feature": "g_dst_n_unique_in_log",
+          "importance_mean": 0.06173,
+          "importance_std": 0.0097
+        },
+        {
+          "feature": "g_reverse_pair_seen",
+          "importance_mean": 0.04544,
+          "importance_std": 0.00062
+        },
+        {
+          "feature": "a_src_n_in_rate",
+          "importance_mean": 0.0362,
+          "importance_std": 0.0037
+        },
+        {
+          "feature": "g_src_pagerank_log",
+          "importance_mean": 0.03401,
+          "importance_std": 0.00618
+        },
+        {
+          "feature": "t_hour",
+          "importance_mean": 0.02479,
+          "importance_std": 0.00036
+        },
+        {
+          "feature": "a_src_mean_z_out",
+          "importance_mean": 0.01544,
+          "importance_std": 0.00262
+        },
+        {
+          "feature": "a_dst_max_z_out",
+          "importance_mean": 0.01518,
+          "importance_std": 0.00252
+        },
+        {
+          "feature": "a_dst_n_out_rate",
+          "importance_mean": 0.01426,
+          "importance_std": 0.00295
+        },
+        {
+          "feature": "a_dst_n_in_rate",
+          "importance_mean": 0.01297,
+          "importance_std": 0.00207
+        },
+        {
+          "feature": "a_src_mean_z_in",
+          "importance_mean": 0.01158,
+          "importance_std": 0.00132
+        },
+        {
+          "feature": "a_src_n_out_rate",
+          "importance_mean": 0.01124,
+          "importance_std": 0.00093
+        },
+        {
+          "feature": "t_log_amount_paid",
+          "importance_mean": 0.01037,
+          "importance_std": 0.00294
+        },
+        {
+          "feature": "a_dst_mean_z_in",
+          "importance_mean": 0.00965,
+          "importance_std": 0.00327
+        },
+        {
+          "feature": "a_src_max_z_out",
+          "importance_mean": 0.00875,
+          "importance_std": 0.00059
+        },
+        {
+          "feature": "a_dst_mean_z_out",
+          "importance_mean": 0.00772,
+          "importance_std": 0.0022
+        },
+        {
+          "feature": "g_dst_pagerank_log",
+          "importance_mean": 0.00515,
+          "importance_std": 0.00125
+        },
+        {
+          "feature": "a_src_days_since_last",
+          "importance_mean": 0.00475,
+          "importance_std": 6e-05
+        },
+        {
+          "feature": "a_dst_days_since_last",
+          "importance_mean": 0.00437,
+          "importance_std": 0.00086
+        },
+        {
+          "feature": "a_dst_days_active_frac",
+          "importance_mean": 0.00218,
+          "importance_std": 0.00026
+        },
+        {
+          "feature": "g_dst_wcc_size_log",
+          "importance_mean": 0.00125,
+          "importance_std": 0.00018
+        },
+        {
+          "feature": "g_src_has_received_before",
+          "importance_mean": 1e-05,
+          "importance_std": 0.0
+        },
+        {
+          "feature": "g_dst_has_sent_before",
+          "importance_mean": 0.0,
+          "importance_std": 0.0
+        },
+        {
+          "feature": "a_src_days_active_frac",
+          "importance_mean": -0.00136,
+          "importance_std": 0.00027
+        },
+        {
+          "feature": "g_src_wcc_size_log",
+          "importance_mean": -0.00382,
+          "importance_std": 0.00137
+        }
+      ]
+    }
+  }
+}
