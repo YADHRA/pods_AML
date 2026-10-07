@@ -1,0 +1,14 @@
+{
+  "run_id": "20261007_m2_full_seed42",
+  "model": "m2",
+  "variant": "full",
+  "seed": 42,
+  "split": "test",
+  "space": "log-odds (XGBoost pred_contribs, TreeSHAP)",
+  "base_value": -7.612104892730713,
+  "n_txn": 22370,
+  "n_features": 35,
+  "rows": 782950,
+  "row_set": "same txn_ids as transaction_inspector.parquet (biased sample)",
+  "note": "shap_value summed over features + base_value = raw model score (log-odds); sigmoid gives the probability score. Categorical features have feature_value = NaN and the label in feature_value_str. Never compute rates from this sample."
+}
