@@ -18,3 +18,12 @@ frontend/dist/
 .ipynb_checkpoints/
 .DS_Store
 .env
+# Generated API specifications
+
+/openapi.json
+/openapi8001.json
+
+# Generated model outputs
+
+/results/**/*.parquet
+
