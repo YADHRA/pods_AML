@@ -27,6 +27,8 @@ class TransactionResponse(BaseModel):
     dst_node: int
     src_bank: str
     dst_bank: str
+    src_account: str | None = None
+    dst_account: str | None = None
     amount_paid: float
     amount_received: float
     currency_paid: str
@@ -99,8 +101,21 @@ class AlertItem(BaseModel):
     split: str
     is_laundering: int
     new_pair: bool
-    score: float
+    score: float | None = None
     alert: bool
+    timestamp: str | None = None
+    date: str | None = None
+    sender_account: str | None = None
+    sender_bank: str | None = None
+    sender_node: int | None = None
+    receiver_account: str | None = None
+    receiver_bank: str | None = None
+    receiver_node: int | None = None
+    amount: float | None = None
+    currency: str | None = None
+    payment_format: str | None = None
+    risk_score: float | None = None
+    risk_level: str | None = None
 
 
 class AlertsResponse(BaseModel):
@@ -110,5 +125,7 @@ class AlertsResponse(BaseModel):
     total: int
     limit: int
     offset: int
+    kpis: dict | None = None
     items: list[AlertItem]
+
 

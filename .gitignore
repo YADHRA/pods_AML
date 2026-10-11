@@ -27,3 +27,4 @@ frontend/dist/
 
 /results/**/*.parquet
 
+probe.txt

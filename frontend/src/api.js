@@ -1,4 +1,3 @@
-
 const BASE = (
   import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8001'
 ).replace(/\/$/, '');
@@ -10,12 +9,17 @@ async function request(path, options = {}) {
   });
 
   if (!response.ok) {
-    const detail = await response.text().catch(() => '');
+    let detail = '';
+    try {
+      const j = await response.json();
+      if (typeof j.detail === 'string') detail = j.detail;
+      else if (j.message) detail = j.message;
+    } catch {
+      detail = await response.text().catch(() => '');
+    }
 
     throw new Error(
-      `${response.status} ${response.statusText}${
-        detail ? ` — ${detail.slice(0, 180)}` : ''
-      }`
+      detail || `${response.status} ${response.statusText}`
     );
   }
 
@@ -25,47 +29,47 @@ async function request(path, options = {}) {
 export const api = {
   base: BASE,
 
-  // Check whether the backend is running
+  // Health
   health: () => request('/api/health'),
 
-  // Dashboard summary
+  // Dashboard / Overview
   overview: () => request('/api/dashboard/summary'),
+  daily: () => request('/api/data/daily'),
+  splits: () => request('/api/data/splits'),
+  quality: () => request('/api/data/quality'),
 
-  // Model information
-  models: () => request('/api/models'),
+  // Alerts
+  alerts: (params = {}) => {
+    const q = new URLSearchParams();
+    Object.entries(params).forEach(([k, v]) => {
+      if (v !== undefined && v !== null && v !== '') q.append(k, String(v));
+    });
+    return request(`/api/alerts?${q.toString()}`);
+  },
+  accountAlerts: (params = {}) => {
+    const q = new URLSearchParams();
+    Object.entries(params).forEach(([k, v]) => {
+      if (v !== undefined && v !== null && v !== '') q.append(k, String(v));
+    });
+    return request(`/api/alerts/accounts?${q.toString()}`);
+  },
+
+  // Accounts
+  accountLookup: (q) => request(`/api/accounts/lookup?q=${encodeURIComponent(q)}`),
+  account: (id, date = '') =>
+    request(`/api/accounts/${encodeURIComponent(id)}${date ? `?date=${encodeURIComponent(date)}` : ''}`),
+
+  // Transactions & SHAP explanations
+  transaction: (id) => request(`/api/transactions/${encodeURIComponent(id)}`),
+  transactionExplanation: (id, model = 'm2') =>
+    request(`/api/transactions/${encodeURIComponent(id)}/explanation?model=${encodeURIComponent(model)}`),
+
+  // Models evaluation & curves
   evaluation: () => request('/api/models/evaluation'),
-
-  // Transaction graph
-  
-
-graph: ({
-  node_id = 0,
-  date = '2022-09-18',
-  depth = 2,
-  max_nodes = 60,
-} = {}) => {
-  const query = new URLSearchParams({
-    date,
-    depth: String(depth),
-    max_nodes: String(max_nodes),
-  });
-
-  return request(
-    `/api/graph/${encodeURIComponent(node_id)}?${query.toString()}`
-  );
-},
-
-
-  // Transaction investigation
-  transaction: (id) =>
-    request(`/api/transactions/${encodeURIComponent(id)}`),
-
-  // Account investigation
-  account: (id) =>
-    request(`/api/accounts/${encodeURIComponent(id)}`),
-
-  // Prediction for a transaction
-  prediction: (id) =>
-    request(`/api/models/predictions/${encodeURIComponent(id)}`),
+  curves: (model = 'm2', split = 'test') =>
+    request(`/api/models/curves?model=${encodeURIComponent(model)}&split=${encodeURIComponent(split)}`),
+  shap: (model = 'm2') =>
+    request(`/api/models/shap?model=${encodeURIComponent(model)}`),
+  comparison: () => request('/api/models/comparison'),
+  prediction: (id) => request(`/api/models/predictions/${encodeURIComponent(id)}`),
 };
-

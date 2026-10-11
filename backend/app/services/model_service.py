@@ -117,3 +117,42 @@ def get_evaluation():
         "threshold_selection": "max_f1_on_validation",
         "models": evaluation,
     }
+
+
+def get_curves(model: str = "m2", split: str = "test"):
+    results_dir = Path(__file__).resolve().parents[3] / "results"
+    path = results_dir / "curves" / f"20261007_{model.lower()}_full_seed42_{split.lower()}.json"
+    if not path.exists():
+        raise ValueError(f"Curve file not found: {path.name}")
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def get_shap(model: str = "m2"):
+    results_dir = Path(__file__).resolve().parents[3] / "results"
+    path = results_dir / "shap" / f"20261007_{model.lower()}_full_seed42.json"
+    if not path.exists():
+        raise ValueError(f"SHAP file not found: {path.name}")
+    with open(path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    # Recursively clean NaNs so JSON serialization never throws Out of range float error
+    def _clean(val):
+        if isinstance(val, dict):
+            return {k: _clean(v) for k, v in val.items()}
+        if isinstance(val, list):
+            return [_clean(v) for v in val]
+        if isinstance(val, float):
+            import math
+            return None if (math.isnan(val) or math.isinf(val)) else val
+        return val
+    return _clean(data)
+
+
+
+def get_comparison():
+    results_dir = Path(__file__).resolve().parents[3] / "results"
+    path = results_dir / "comparison.json"
+    if not path.exists():
+        raise ValueError("comparison.json not found")
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)

@@ -1,2 +1,22 @@
 <!doctype html>
-<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="theme-color" content="#0b1b3a"/><title>PODS AML | Graph-based AML</title></head><body><div id="root"></div><script type="module" src="/src/main.jsx"></script></body></html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PODS AML</title>
+<style>
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:#F4F6FA}
+#boot{display:flex;height:100vh;align-items:center;justify-content:center;color:#64748B;font-size:14px}
+#fatal{display:none;margin:24px;padding:16px;border:1px solid #FCA5A5;background:#FDECEC;color:#991B1B;border-radius:10px;white-space:pre-wrap;font:13px ui-monospace,monospace}
+</style>
+</head>
+<body>
+<div id="root"><div id="boot">Loading PODS AML…</div></div>
+<pre id="fatal"></pre>
+<script>
+/* Never show a blank page: any startup error is printed on screen */
+window.addEventListener('error',function(e){var f=document.getElementById('fatal');f.style.display='block';f.textContent='App error: '+(e.message||e.error)});
+</script>
+<script type="module" src="/src/main.jsx"></script>
+</body>
+</html>

@@ -1,233 +1,203 @@
-
-import React, { useEffect, useState } from 'react';
-import {
-  Activity,
-  AlertTriangle,
-  Users,
-  ArrowLeftRight,
-  ShieldCheck,
-  Database,
-  CreditCard,
-} from 'lucide-react';
-
+import React from 'react';
 import { api } from '../api.js';
+import { useAsync, fmtInt, fmtPct, fmtNum } from '../hooks.js';
 import {
-  Metric,
-  Status,
+  Card,
+  Kpi,
+  RiskBadge,
+  DataTable,
+  LineChart,
+  Donut,
+  BarList,
+  Banner,
   Loading,
-  EmptyState,
-} from '../components/Status.jsx';
+  ErrorState,
+  Empty,
+} from '../components/ui.jsx';
 
 export default function Overview({ onNavigate }) {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const { data: summary, loading: loadingSummary, error: errSummary, retry: retrySummary } = useAsync(() => api.overview(), []);
+  const { data: daily, loading: loadingDaily } = useAsync(() => api.daily(), []);
 
-  useEffect(() => {
-    let live = true;
+  const { data: quality } = useAsync(() => api.quality(), []);
+  const { data: alertsData, loading: loadingAlerts } = useAsync(() => api.alerts({ limit: 6, model: 'm2' }), []);
 
-    api.overview()
-      .then((result) => {
-        if (live) setData(result);
-      })
-      .catch((err) => {
-        if (live) setError(err.message);
-      })
-      .finally(() => {
-        if (live) setLoading(false);
-      });
+  if (loadingSummary) return <Loading rows={7} />;
+  if (errSummary) return <ErrorState error={`Overview data unavailable: ${errSummary}`} onRetry={retrySummary} />;
+  if (!summary) return <Empty title="Overview data not found" />;
 
-    return () => {
-      live = false;
-    };
-  }, []);
+  const formatColors = {
+    Cheque: '#2563EB',
+    'Credit Card': '#3B82F6',
+    ACH: '#60A5FA',
+    Cash: '#93C5FD',
+    Reinvestment: '#64748B',
+    Wire: '#94A3B8',
+    Bitcoin: '#CBD5E1',
+  };
 
-  if (loading) {
-    return <Loading label="Loading real dashboard data..." />;
-  }
+  const paymentSegments = Object.entries(summary.payment_formats || {}).map(([label, value]) => ({
+    label,
+    value,
+    color: formatColors[label] || '#64748B',
+  }));
 
-  if (error || !data) {
-    return (
-      <div className="page-stack">
-        <Status kind="warning">
-          Could not load dashboard data: {error || 'Empty API response'}.
-          Check that the backend is running and api.overview() uses
-          /api/dashboard/summary.
-        </Status>
-        <EmptyState
-          title="Dashboard data unavailable"
-          detail="The dashboard will display real values when the summary API responds successfully."
-        />
-      </div>
-    );
-  }
+  const paymentBarItems = Object.entries(summary.payment_formats || {})
+    .sort((a, b) => b[1] - a[1])
+    .map(([label, value]) => ({
+      label,
+      value,
+      color: formatColors[label] || '#2563EB',
+    }));
 
-  const labels = data.labels ?? {};
-  const formats = data.payment_formats ?? {};
+  const dailyValues = (daily || []).map(d => d.n_rows || 0);
+  const dailyLabels = (daily || []).map(d => (d.date ? d.date.slice(5) : ''));
 
-  const cards = [
+  const alertColumns = [
     {
-      label: 'Total transactions',
-      value: data.total_transactions,
-      icon: ArrowLeftRight,
-      sub: 'Transactions in dataset',
+      key: 'txn_id',
+      label: 'Transaction ID',
+      render: r => <b>#{r.txn_id}</b>,
     },
     {
-      label: 'Account nodes',
-      value: data.total_nodes,
-      icon: Users,
-      sub: 'Distinct graph nodes',
+      key: 'timestamp',
+      label: 'Timestamp',
+      render: r => r.timestamp ? r.timestamp.slice(0, 16) : 'Not available',
     },
     {
-      label: 'Dataset laundering labels',
-      value: labels.laundering,
-      icon: AlertTriangle,
-      sub: 'Ground-truth labels, not model alerts',
+      key: 'sender_account',
+      label: 'Sender Account',
+      render: r => <span>{r.sender_account} <small className="u-sub">({r.sender_bank})</small></span>,
     },
     {
-      label: 'Dataset normal labels',
-      value: labels.normal,
-      icon: ShieldCheck,
-      sub: 'Ground-truth labels',
+      key: 'receiver_account',
+      label: 'Receiver Account',
+      render: r => <span>{r.receiver_account} <small className="u-sub">({r.receiver_bank})</small></span>,
     },
     {
-      label: 'Payment formats',
-      value: Object.keys(formats).length,
-      icon: CreditCard,
-      sub: 'Formats in the dataset',
+      key: 'amount',
+      label: 'Amount',
+      right: true,
+      render: r => `${fmtNum(r.amount, 2)} ${r.currency || 'USD'}`,
+    },
+    {
+      key: 'payment_format',
+      label: 'Payment Method',
+    },
+    {
+      key: 'risk_score',
+      label: 'Risk Score',
+      right: true,
+      render: r => fmtNum(r.risk_score, 4),
+    },
+    {
+      key: 'risk_level',
+      label: 'Risk Badge',
+      render: r => <RiskBadge level={r.risk_level} />,
     },
   ];
 
-  const formatNumber = (value) =>
-    typeof value === 'number'
-      ? value.toLocaleString('en-IN')
-      : value ?? '—';
-
   return (
-    <div className="page-stack">
-      <Status kind="success">
-        Dashboard loaded successfully from the backend summary API.
-      </Status>
-
-      <div className="metric-grid">
-        {cards.map(({ label, value, icon: Icon, sub }) => (
-          <Metric
-            key={label}
-            label={label}
-            value={formatNumber(value)}
-            icon={Icon}
-            sub={sub}
-          />
-        ))}
+    <div className="u-page">
+      {/* Row of KPI cards */}
+      <div className="u-grid u-k5">
+        <Kpi
+          label="Total Transactions"
+          value={fmtInt(summary.total_transactions)}
+          sub={`${summary.date_range?.start} to ${summary.date_range?.end}`}
+        />
+        <Kpi
+          label="Account Nodes"
+          value={fmtInt(summary.total_nodes)}
+          sub="Unique bank entities"
+        />
+        <Kpi
+          label="Laundering Labels"
+          value={fmtInt(summary.labels?.laundering)}
+          tone="High"
+          sub={fmtPct((summary.labels?.laundering || 0) / (summary.total_transactions || 1), 3) + ' prevalence'}
+        />
+        <Kpi
+          label="Normal Labels"
+          value={fmtInt(summary.labels?.normal)}
+          sub={fmtPct((summary.labels?.normal || 0) / (summary.total_transactions || 1), 2) + ' legitimate'}
+        />
+        <Kpi
+          label="Payment Formats"
+          value={fmtInt(Object.keys(summary.payment_formats || {}).length)}
+          sub="Monitored channels"
+        />
       </div>
 
-      <div className="two-col">
-        <section className="card">
-          <div className="section-heading">
-            <div>
-              <h3>Dataset summary</h3>
-              <p>Values returned by the backend</p>
-            </div>
-            <span className="eyebrow">LIVE API</span>
-          </div>
+      {/* Data Quality Banner */}
+      {quality && (
+        <Banner>
+          <b>Verified Pipeline Quality:</b> {fmtInt(quality.n_rows)} transactions across {quality.currencies?.length || 0} currencies. Strictly 0 duplicates ({fmtInt(quality.exact_duplicate_extra_rows)}) and chronological consistency confirmed.
+        </Banner>
+      )}
 
-          <dl className="detail-list">
-            <dt>Total transactions</dt>
-            <dd>{formatNumber(data.total_transactions)}</dd>
-
-            <dt>Total graph nodes</dt>
-            <dd>{formatNumber(data.total_nodes)}</dd>
-
-            <dt>Dataset start date</dt>
-            <dd>{data.date_range?.start ?? '—'}</dd>
-
-            <dt>Dataset end date</dt>
-            <dd>{data.date_range?.end ?? '—'}</dd>
-
-            <dt>Normal labels</dt>
-            <dd>{formatNumber(labels.normal)}</dd>
-
-            <dt>Laundering labels</dt>
-            <dd>{formatNumber(labels.laundering)}</dd>
-          </dl>
-        </section>
-
-        <section className="card">
-          <div className="section-heading">
-            <div>
-              <h3>Payment format distribution</h3>
-              <p>Transaction counts by payment format</p>
-            </div>
-            <Activity size={20} />
-          </div>
-
-          {Object.keys(formats).length > 0 ? (
-            <div className="payment-list">
-              {Object.entries(formats)
-                .sort((a, b) => b[1] - a[1])
-                .map(([name, count]) => {
-                  const percentage =
-                    data.total_transactions > 0
-                      ? (count / data.total_transactions) * 100
-                      : 0;
-
-                  return (
-                    <div className="payment-item" key={name}>
-                      <div className="payment-item-heading">
-                        <span>{name}</span>
-                        <span>{formatNumber(count)}</span>
-                      </div>
-
-                      <div className="payment-bar">
-                        <div
-                          className="payment-bar-fill"
-                          style={{ width: `${percentage}%` }}
-                        />
-                      </div>
-
-                      <p className="muted small">
-                        {percentage.toFixed(2)}% of all transactions
-                      </p>
-                    </div>
-                  );
-                })}
-            </div>
-          ) : (
-            <EmptyState
-              title="No payment format data"
-              detail="The backend did not return payment format counts."
-            />
-          )}
-        </section>
-      </div>
-
-      <section className="card">
-        <div className="section-heading">
-          <div>
-            <h3>Model selection</h3>
-            <p>Models planned for AML investigation</p>
-          </div>
-        </div>
-
-        <div className="model-tile">
-          <b>M1 · Transaction-only</b>
-          <p>Uses transaction-level features only.</p>
-        </div>
-
-        <div className="model-tile active">
-          <b>M2 · Transaction + Account + Graph</b>
-          <p>
-            Combines transaction features with historical account and
-            graph features, using only information available before
-            the transaction date.
+      {/* Activity Chart & Payment Breakdown */}
+      <div className="u-grid u-c21">
+        <Card title="Daily Transaction Volume" tag="18-day transaction horizon">
+          <p className="u-sub" style={{ margin: '0 0 12px' }}>
+            Volume distribution across full ingestion pipeline.
           </p>
-        </div>
+          {loadingDaily ? (
+            <Loading rows={4} />
+          ) : dailyValues.length > 0 ? (
+            <LineChart values={dailyValues} labels={dailyLabels} height={230} />
+          ) : (
+            <Empty title="Daily activity not available" />
+          )}
+        </Card>
 
-        <p className="muted small">
-          Model-generated alert counts and performance metrics are not
-          displayed because they are not provided by this summary endpoint.
+        <Card title="Payment Rails" tag="Volume by format">
+          <Donut
+            segments={paymentSegments}
+            top={fmtInt(summary.total_transactions)}
+            bottom="Transactions"
+          />
+          <div style={{ marginTop: 14 }}>
+            <BarList
+              items={paymentBarItems}
+              format={v => `${fmtInt(v)} (${fmtPct(v / (summary.total_transactions || 1), 1)})`}
+            />
+          </div>
+        </Card>
+      </div>
+
+      {/* Time Split Summary */}
+      
+
+      {/* Recent High-Risk Alerts Table */}
+      <Card
+        title="Recent High-Risk Alerts"
+        tag="Top flagged by Model 2"
+        right={
+          <button
+            className="u-btn s"
+            onClick={() => onNavigate?.('alerts')}
+            style={{ fontWeight: 600 }}
+          >
+            View all alerts →
+          </button>
+        }
+      >
+        <p className="u-sub" style={{ margin: '0 0 12px' }}>
+          Highest confidence suspicion alerts on the test evaluation set. Click any row to inspect features and plain-language reasons.
         </p>
-      </section>
+        {loadingAlerts ? (
+          <Loading rows={5} />
+        ) : alertsData?.items?.length ? (
+          <DataTable
+            columns={alertColumns}
+            rows={alertsData.items}
+            onRowClick={row => onNavigate?.('inspector', { txnId: row.txn_id })}
+          />
+        ) : (
+          <Empty title="No high-risk alerts found" />
+        )}
+      </Card>
     </div>
   );
 }

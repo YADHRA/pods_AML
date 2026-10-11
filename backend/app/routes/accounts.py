@@ -1,8 +1,8 @@
-﻿from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query
 
 from app.schemas.api import AccountResponse
 from app.schemas.validators import validate_date
-from app.services.account_service import get_account
+from app.services.account_service import get_account, lookup_account
 
 
 router = APIRouter(
@@ -11,11 +11,24 @@ router = APIRouter(
 )
 
 
+@router.get("/lookup")
+def account_lookup(
+    q: str = Query(..., description="Node ID or Account number to search"),
+):
+    account = lookup_account(q)
+    if account is None:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Account or node '{q}' not found",
+        )
+    return account
+
+
 @router.get("/{node_id}", response_model=AccountResponse)
 def account_details(
     node_id: int,
     date: str = Query(
-        ...,
+        default="2022-09-18",
         description="Historical feature date in YYYY-MM-DD format",
     ),
 ):

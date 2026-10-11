@@ -1,6 +1,16 @@
 
+import sys
+from pathlib import Path
+
+_ROOT = Path(__file__).resolve().parents[2]
+if str(_ROOT / "src") not in sys.path:
+    sys.path.insert(0, str(_ROOT / "src"))
+if str(_ROOT / "backend") not in sys.path:
+    sys.path.insert(0, str(_ROOT / "backend"))
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
 
 from app.routes.accounts import router as account_router
 from app.routes.dashboard import router as dashboard_router
@@ -8,6 +18,7 @@ from app.routes.transactions import router as transaction_router
 from app.routes.graph import router as graph_router
 from app.routes.models import router as model_router
 from app.routes.alerts import router as alerts_router
+from app.routes.data import router as data_router
 
 app = FastAPI(
     title="PODS AML API",
@@ -50,3 +61,4 @@ app.include_router(account_router)
 app.include_router(graph_router)
 app.include_router(model_router)
 app.include_router(alerts_router)
+app.include_router(data_router)
