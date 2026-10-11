@@ -1,8 +1,9 @@
+﻿
 from fastapi import APIRouter, HTTPException, Query
 
-from backend.app.schemas.api import GraphResponse
-from backend.app.schemas.validators import validate_date
-from backend.app.services.graph_service import get_graph
+from app.schemas.api import GraphResponse
+from app.schemas.validators import validate_date
+from app.services.graph_service import get_graph
 
 
 router = APIRouter(
@@ -14,36 +15,20 @@ router = APIRouter(
 @router.get("/{node_id}", response_model=GraphResponse)
 def graph_details(
     node_id: int,
-    date: str = Query(
-        ...,
-        description="Historical graph date in YYYY-MM-DD format",
-    ),
-    depth: int = Query(
-        1,
-        ge=1,
-        le=3,
-        description="Graph investigation depth",
-    ),
+    date: str = Query(..., description="Snapshot date in YYYY-MM-DD format"),
+    depth: int = Query(2, ge=1, le=3),
+    max_nodes: int = Query(60, ge=1, le=100),
 ):
     try:
         validated_date = validate_date(date)
-    except ValueError as exc:
-        raise HTTPException(
-            status_code=422,
-            detail=str(exc),
-        ) from exc
-
-    try:
         graph = get_graph(
             node_id=node_id,
             date=validated_date,
             depth=depth,
+            max_nodes=max_nodes,
         )
     except ValueError as exc:
-        raise HTTPException(
-            status_code=400,
-            detail=str(exc),
-        ) from exc
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
 
     if graph is None:
         raise HTTPException(

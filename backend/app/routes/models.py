@@ -1,13 +1,19 @@
+﻿
 from fastapi import APIRouter, HTTPException
 
-from backend.app.schemas.api import PredictionResponse
-from backend.app.services.model_service import get_prediction
+from app.schemas.api import PredictionResponse
+from app.services.model_service import get_evaluation, get_prediction
 
 
 router = APIRouter(
     prefix="/api/models",
     tags=["Models"],
 )
+
+
+@router.get("/evaluation")
+def model_evaluation():
+    return get_evaluation()
 
 
 @router.get(

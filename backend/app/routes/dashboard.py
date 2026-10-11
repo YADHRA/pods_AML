@@ -1,7 +1,7 @@
-from fastapi import APIRouter
+﻿from fastapi import APIRouter
 
-from backend.app.schemas.api import DashboardResponse
-from backend.app.services.dashboard_service import get_dashboard_summary
+from app.schemas.api import DashboardResponse
+from app.services.dashboard_service import get_dashboard_summary
 
 
 router = APIRouter(

@@ -50,22 +50,33 @@ class AccountResponse(BaseModel):
     has_received_before: int
 
 
+
 class GraphNode(BaseModel):
     id: int
     bank: str
     account: str
     is_center: bool
+    depth: int = 0
+    risk_score: float | None = None
+    risk_level: str = "Not scored"
 
 
 class GraphEdge(BaseModel):
     source: int
     target: int
+    txn_count: int = 0
+    total_amount: float = 0.0
+    last_date: str | None = None
+
 
 
 class GraphResponse(BaseModel):
     node_id: int
     date: str
     depth: int
+    max_nodes: int = 60
+    total_nodes_found: int = 0
+    truncated: bool = False
     nodes: list[GraphNode]
     edges: list[GraphEdge]
 class ModelPrediction(BaseModel):

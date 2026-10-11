@@ -1,8 +1,8 @@
-
+﻿
 from fastapi import APIRouter, HTTPException, Query
 
-from backend.app.schemas.api import AlertsResponse
-from backend.app.services.alerts_service import get_alerts
+from app.schemas.api import AlertsResponse
+from app.services.alerts_service import get_alerts
 
 router = APIRouter(prefix="/api/alerts", tags=["Alerts"])
 
@@ -28,4 +28,5 @@ def list_alerts(
             status_code=422,
             detail=str(exc),
         ) from exc
+
 

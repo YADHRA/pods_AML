@@ -1,8 +1,8 @@
-from fastapi import APIRouter, HTTPException, Query
+﻿from fastapi import APIRouter, HTTPException, Query
 
-from backend.app.schemas.api import AccountResponse
-from backend.app.schemas.validators import validate_date
-from backend.app.services.account_service import get_account
+from app.schemas.api import AccountResponse
+from app.schemas.validators import validate_date
+from app.services.account_service import get_account
 
 
 router = APIRouter(

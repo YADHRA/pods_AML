@@ -1,7 +1,7 @@
-from fastapi import APIRouter, HTTPException
+﻿from fastapi import APIRouter, HTTPException
 
-from backend.app.schemas.api import TransactionResponse
-from backend.app.services.transaction_service import get_transaction
+from app.schemas.api import TransactionResponse
+from app.services.transaction_service import get_transaction
 
 
 router = APIRouter(
