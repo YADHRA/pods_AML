@@ -17,3 +17,7 @@ Contracts: `docs/data_contract.md` · Feature lists: `configs/feature_sets.yaml`
 ## Ownership
 P1: data, features, models, evaluation, Data&Split + Results pages. P2: graph, backend, frontend (other pages).
 Branches: `p1/<topic>`, `p2/<topic>`, `contract/<change>`. No direct pushes to `main`.
+
+## Model Comparison
+
+See [Linear SVM vs XGBoost results](docs/model_comparison.md) for the model comparison, test metrics, interpretation, and limitations.

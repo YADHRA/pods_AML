@@ -1,0 +1,203 @@
+{
+  "name": "svm_m1_full",
+  "features": [
+    "t_log_amount_paid",
+    "t_amount_z_in_currency",
+    "t_payment_format",
+    "t_cur_paid",
+    "t_is_fx",
+    "t_is_self_loop",
+    "t_same_bank",
+    "t_hour"
+  ],
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "selection_seed": 42,
+  "selection_metric": "validation PR-AUC",
+  "grid": [
+    {
+      "alpha": 1e-05,
+      "class_weight": null
+    },
+    {
+      "alpha": 1e-05,
+      "class_weight": "balanced"
+    },
+    {
+      "alpha": 0.0001,
+      "class_weight": null
+    },
+    {
+      "alpha": 0.0001,
+      "class_weight": "balanced"
+    },
+    {
+      "alpha": 0.001,
+      "class_weight": null
+    },
+    {
+      "alpha": 0.001,
+      "class_weight": "balanced"
+    }
+  ],
+  "max_iter": 20,
+  "best_config": {
+    "alpha": 0.0001,
+    "class_weight": "balanced"
+  },
+  "search": [
+    {
+      "config_id": 1,
+      "alpha": 1e-05,
+      "class_weight": null,
+      "seed": 42,
+      "max_iter": 20,
+      "val_pr_auc": 0.005697235533023798,
+      "seconds": 12.9
+    },
+    {
+      "config_id": 2,
+      "alpha": 1e-05,
+      "class_weight": "balanced",
+      "seed": 42,
+      "max_iter": 20,
+      "val_pr_auc": 0.014275176818201049,
+      "seconds": 13.0
+    },
+    {
+      "config_id": 3,
+      "alpha": 0.0001,
+      "class_weight": null,
+      "seed": 42,
+      "max_iter": 20,
+      "val_pr_auc": 0.004824398920728395,
+      "seconds": 12.5
+    },
+    {
+      "config_id": 4,
+      "alpha": 0.0001,
+      "class_weight": "balanced",
+      "seed": 42,
+      "max_iter": 20,
+      "val_pr_auc": 0.01436122274488035,
+      "seconds": 13.7
+    },
+    {
+      "config_id": 5,
+      "alpha": 0.001,
+      "class_weight": null,
+      "seed": 42,
+      "max_iter": 20,
+      "val_pr_auc": 0.0019421559131805371,
+      "seconds": 13.7
+    },
+    {
+      "config_id": 6,
+      "alpha": 0.001,
+      "class_weight": "balanced",
+      "seed": 42,
+      "max_iter": 20,
+      "val_pr_auc": 0.01420041970068966,
+      "seconds": 14.0
+    }
+  ],
+  "val": {
+    "42": {
+      "n": 965524,
+      "n_pos": 1036,
+      "prevalence": 0.0010729924890525767,
+      "pr_auc": 0.01436122274488035,
+      "lift": 13.384271457073218,
+      "roc_auc": 0.9074203751019325,
+      "threshold": 5.877199172973633,
+      "precision": 0.021809369951534735,
+      "recall": 0.4691119691119691,
+      "f1": 0.04168096054888508,
+      "tn": 942690,
+      "fp": 21798,
+      "fn": 550,
+      "tp": 486,
+      "n_alerts": 22284,
+      "accuracy": 0.976854019164723,
+      "budget_frac": 0.005,
+      "budget_k": 4828,
+      "recall_at_budget": 0.019305019305019305,
+      "precision_at_budget": 0.004142502071251036,
+      "threshold_info": {
+        "threshold": 5.877199172973633,
+        "val_f1": 0.04168096054888508,
+        "val_precision": 0.021809369951534735,
+        "val_recall": 0.4691119691119691,
+        "val_n_alerts": 22284,
+        "rule": "max_f1_on_validation"
+      }
+    },
+    "43": {
+      "n": 965524,
+      "n_pos": 1036,
+      "prevalence": 0.0010729924890525767,
+      "pr_auc": 0.014481629627835784,
+      "lift": 13.496487417747604,
+      "roc_auc": 0.9070484681347647,
+      "threshold": 5.50065279006958,
+      "precision": 0.021386938363394375,
+      "recall": 0.4498069498069498,
+      "f1": 0.04083242059145674,
+      "tn": 943165,
+      "fp": 21323,
+      "fn": 570,
+      "tp": 466,
+      "n_alerts": 21789,
+      "accuracy": 0.9773252658659961,
+      "budget_frac": 0.005,
+      "budget_k": 4828,
+      "recall_at_budget": 0.02027027027027027,
+      "precision_at_budget": 0.004349627174813587,
+      "threshold_info": {
+        "threshold": 5.50065279006958,
+        "val_f1": 0.04083242059145674,
+        "val_precision": 0.021386938363394375,
+        "val_recall": 0.4498069498069498,
+        "val_n_alerts": 21789,
+        "rule": "max_f1_on_validation"
+      }
+    },
+    "44": {
+      "n": 965524,
+      "n_pos": 1036,
+      "prevalence": 0.0010729924890525767,
+      "pr_auc": 0.014399325638375846,
+      "lift": 13.419782324003089,
+      "roc_auc": 0.9069491961670247,
+      "threshold": 5.913595199584961,
+      "precision": 0.0210477515067223,
+      "recall": 0.43822393822393824,
+      "f1": 0.040166327523666286,
+      "tn": 943372,
+      "fp": 21116,
+      "fn": 582,
+      "tp": 454,
+      "n_alerts": 21570,
+      "accuracy": 0.9775272287379703,
+      "budget_frac": 0.005,
+      "budget_k": 4828,
+      "recall_at_budget": 0.02027027027027027,
+      "precision_at_budget": 0.004349627174813587,
+      "threshold_info": {
+        "threshold": 5.913595199584961,
+        "val_f1": 0.040166327523666286,
+        "val_precision": 0.0210477515067223,
+        "val_recall": 0.43822393822393824,
+        "val_n_alerts": 21570,
+        "rule": "max_f1_on_validation"
+      }
+    }
+  },
+  "val_pr_auc_mean": 0.01441405933703066,
+  "val_pr_auc_min": 0.01436122274488035,
+  "val_pr_auc_max": 0.014481629627835784,
+  "protocol": "Train-only preprocessing; configuration selected using seed 42 validation PR-AUC; thresholds frozen on validation. Test and tail rows were not used by this script."
+}

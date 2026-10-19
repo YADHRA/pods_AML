@@ -1,0 +1,38 @@
+{
+  "model": "svm_m1_full",
+  "validation_only": true,
+  "checks": {
+    "svm_m1_full_seed42": {
+      "threshold": 5.877199172973633,
+      "frozen_val_f1": 0.04168096054888508,
+      "recomputed_val_f1": 0.04168096054888508,
+      "f1_difference": 0.0,
+      "pr_auc": 0.01436122274488035,
+      "passed": true
+    },
+    "svm_m1_full_seed43": {
+      "threshold": 5.50065279006958,
+      "frozen_val_f1": 0.04083242059145674,
+      "recomputed_val_f1": 0.04083242059145674,
+      "f1_difference": 0.0,
+      "pr_auc": 0.014481629627835784,
+      "passed": true
+    },
+    "svm_m1_full_seed44": {
+      "threshold": 5.913595199584961,
+      "frozen_val_f1": 0.040166327523666286,
+      "recomputed_val_f1": 0.040166327523666286,
+      "f1_difference": 0.0,
+      "pr_auc": 0.014399325638375846,
+      "passed": true
+    }
+  },
+  "artifact_sha256": {
+    "results/models/svm_m1_full_val.json": "0f55f6a6a1d60d271b86c7ffa2aa1814c9a12999a937ad11f28ea85542f5cd3a",
+    "results/svm_thresholds.json": "3bf5a79bac76157672f1ecec3380f22fa5ca9ab4e842cc5deda22bac935358fe",
+    "models/svm_m1_full_seed42.joblib": "cba1d1b7eeae770c2f11748559d4dfede4e1c9f9f7be04367aa132a066d6f1c0",
+    "models/svm_m1_full_seed43.joblib": "a5158eb1c3f7db3bfd5912054d0b95b5151565cc261c8f5ef275827d832f0cc5",
+    "models/svm_m1_full_seed44.joblib": "0b6396d81e2273824aec63d76cf013f963a105a70004f24b8c3908378c59c408"
+  },
+  "test_evaluated": false
+}

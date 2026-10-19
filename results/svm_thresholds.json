@@ -1,0 +1,26 @@
+{
+  "svm_m1_full_seed42": {
+    "rule": "max_f1_on_validation",
+    "threshold": 5.877199172973633,
+    "val_f1": 0.04168096054888508,
+    "val_n_alerts": 22284,
+    "val_precision": 0.021809369951534735,
+    "val_recall": 0.4691119691119691
+  },
+  "svm_m1_full_seed43": {
+    "rule": "max_f1_on_validation",
+    "threshold": 5.50065279006958,
+    "val_f1": 0.04083242059145674,
+    "val_n_alerts": 21789,
+    "val_precision": 0.021386938363394375,
+    "val_recall": 0.4498069498069498
+  },
+  "svm_m1_full_seed44": {
+    "rule": "max_f1_on_validation",
+    "threshold": 5.913595199584961,
+    "val_f1": 0.040166327523666286,
+    "val_n_alerts": 21570,
+    "val_precision": 0.0210477515067223,
+    "val_recall": 0.43822393822393824
+  }
+}
